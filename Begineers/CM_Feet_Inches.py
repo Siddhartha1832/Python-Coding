@@ -1,0 +1,6 @@
+print("\n *** Convert Centimeter into Feet and Inches. *** \n")
+centimeter = int(input(" Enter the height in centimeters : "))
+inches = round(0.394 * centimeter, 2)
+feet = round(0.0328 * centimeter, 2)
+print("\n The length ({} CM) is {} Inches..".format(centimeter, inches))
+print("\n The length ({} CM) is {} Feet..".format(centimeter, feet))
