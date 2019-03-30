@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <h2> Rock Paper Scissor Game! </h2>
+  
+  <article class="media content-section">
+    <div class="media-body">
+      <script type="text/javascript">
+        var userChoice = prompt("Do you choose rock, paper or scissor?");
+        if (! userChoice) {
+            // User choice was undefined
+            document.write("<p> <b> Player, You cheated! Refresh this screen and fight like a man.</b> </p>");
+        } else {
+            // Display user choice
+            document.write("<p> <b> Player :" + " " + userChoice + "</b> </p>");
+        }
+        // Computer choice
+        var computerChoice = Math.random();
+        if (computerChoice < 0.34) {
+            computerChoice = "rock";
+        } else if(computerChoice <= 0.67) {
+            computerChoice = "paper";
+        } else {
+            computerChoice = "scissor";
+        }
+        // Display computer choice
+        document.write("<p> <b> Computer :" + " " + computerChoice + "</b> </p>");
+        // Compare user choice vs computer choice
+        var compare = function(choice1,choice2) {
+            if (choice1 === choice2) {
+                return "It's a tie!";
+            }
+            if (choice1 === "rock") {
+                if (choice2 === "scissor") {
+                    // rock wins
+                    return "You win!";
+                } else {
+                    // paper wins
+                    return "You lose! Try again.";
+                }
+            }
+            if (choice1 === "paper") {
+                if (choice2 === "rock") {
+                    // paper wins
+                    return "You win!";
+                } else {
+                    // scissor wins
+                    return "You lose! Try again.";
+                }
+            }
+            if (choice1 === "scissor") {
+                if (choice2 === "rock") {
+                    // rock wins
+                    return "You lose! Try again.";
+                } else {
+                    // scissor wins
+                    return "You win!";
+                }
+            }
+        };
+        // Run the compare function
+        var results = compare(userChoice,computerChoice);
+        // Display results
+        document.write("<hr> <b> Result : </b>" + results + "<br> <hr>");
+      </script>
+      <button class="btn btn-outline-info" onclick="window.location.reload(true);"> Wanna Play again! </button>
+    </div>
+  </article>
+
+{% endblock %}

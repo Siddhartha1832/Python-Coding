@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h2> Flames Game using Python </h2>
+	<div class="content-section">
+		<form method="POST" action="{{ url_for('flames_game') }}">
+			{{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.your_name.label(class="form-control-label") }}
+                    {% if form.your_name.errors %}
+                        {{ form.your_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.your_name.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.your_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.partner_name.label(class="form-control-label") }}
+                    {% if form.partner_name.errors %}
+                        {{ form.partner_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.partner_name.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.partner_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+
+    {% if data %}
+        <h3 style="color:green;"> Relationship Status : {{ data }} </h3>
+    {% else %}
+        <h2> Type Your Name and Partner Name to get Relationship Status! </h2>
+    {% endif %}
+
+
+{% endblock %}

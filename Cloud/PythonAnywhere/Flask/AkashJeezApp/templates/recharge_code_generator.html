@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h2> Mobile Recharge Code Generator </h2>
+	<div class="content-section">
+		<form method="POST" action="{{ url_for('recharge_code_generator') }}">
+			{{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.mobile_num.label(class="form-control-label") }}
+                    {% if form.mobile_num.errors %}
+                        {{ form.mobile_num(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.mobile_num.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.mobile_num(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label"> Choose State </label>
+                    <select name ="states" class="form-control" method="GET" action="/">
+                        {% for state in states %}
+                            <option value= "{{ state }}" SELECTED> {{ state }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                 <div class="form-group">
+                     <label class="form-control-label"> Choose Mobile Network </label>
+                    <select name ="mobile_networks" class="form-control" method="GET" action="/">
+                        {% for network in mobile_networks %}
+                            <option value= "{{ network }}" SELECTED> {{ network }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+
+    <h3 style="color:green;"> 16 Digit Recharge Code : {{ data }} </h3>
+
+{% endblock %}

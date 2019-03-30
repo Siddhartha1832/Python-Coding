@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h2> WikipediaSearch </h2>
+	<div class="content-section">
+		<form method="POST" action="{{ url_for('wikipedia_search') }}">
+			{{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.word.label(class="form-control-label") }}
+                    {% if form.word.errors %}
+                        {{ form.word(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.word.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.word(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+
+    <h2> Search Results: </h2>
+
+    {% for data in contents %}
+        <article class="media content-section">
+            <div class="media-body">
+                <h5> {{ data }} </h5>
+            </div>
+        </article>
+    {% endfor %}
+
+{% endblock %}

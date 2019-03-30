@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h2> Translate one Language to other Language </h2>
+	<div class="content-section">
+		<form method="POST" action="{{ url_for('language_translate') }}">
+			{{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.word.label(class="form-control-label") }}
+                    {% if form.word.errors %}
+                        {{ form.word(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.word.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.word(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+
+    <h2> Search Results: </h2>
+
+    <div class='container'>
+        <div class="row">
+            <div class="col">
+                <table class="table table-hover" border=1>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"> Language Name </th>
+                            <th scope="col"> Translated </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in raw_data %}
+                            <tr>
+                                <td> {{ data[0] }} </td>
+                                <td> {{ data[1] }} </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

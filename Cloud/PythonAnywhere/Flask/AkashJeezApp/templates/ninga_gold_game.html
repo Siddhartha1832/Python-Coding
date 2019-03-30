@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+	<div class='container'>
+		<div class='row'>
+			<div class='col-6'>
+				<h4> Your Gold: {{ session['gold'] }} </h4>
+			</div>
+			<div class='col'>
+				<a href="/reset" class='btn btn-primary'> Replay </a>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-md-3 text-center'>
+				<h4> Farm </h4>
+				<p> (earns 10-20 golds) </p>
+				<form action='/process_money' method='post'>
+					<input type='hidden' name='building' value='farm'>
+					<button type="submit" class="btn btn-primary"> Find Gold! </button>
+				</form>
+			</div>
+			<div class='col-md-3 text-center'>
+				<h4> Cave </h4>
+				<p> (earns 5-10 golds) </p>
+				<form action='/process_money' method='post'>
+					<input type='hidden' name='building' value='cave'>
+					<button type="submit" class="btn btn-primary"> Find Gold! </button>
+				</form>
+			</div>
+			<div class='col-md-3 text-center'>
+				<h4> House </h4>
+				<p> (earns 2-5 golds) </p>
+				<form action='/process_money' method='post'>
+					<input type='hidden' name='building' value='house'>
+					<button type="submit" class="btn btn-primary"> Find Gold! </button>
+				</form>
+			</div>
+			<div class='col-md-3 text-center'>
+				<h4> Casino </h4>
+				<p> (earns/loses 0-50 golds) </p>
+				<form action='/process_money' method='post'>
+					<input type='hidden' name='building' value='casino'>
+					<button type="submit" class="btn btn-primary"> Find Gold! </button>
+				</form>
+			</div>
+		</div>
+		<div class='row'>
+			<h4> Activities: </h4> <br>
+			{% for activity in session['activities'] %}
+    			<article class="media content-section">
+      				<div class="media-body">
+        				{% if 'Earned' not in activity %}
+							<p class='lose' color='red'>{{ activity }}</p>
+						{% else %}
+							<p class='win' color='green'>{{ activity }}</p>
+						{% endif %}
+      				</div>
+    			</article>
+  			{% endfor %}
+		</div>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h2> Get Song Lyrics </h2>
+	<div class="content-section">
+		<form method="POST" action="{{ url_for('song_lyrics') }}">
+			{{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.artist_name.label(class="form-control-label") }}
+                    {% if form.artist_name.errors %}
+                        {{ form.artist_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.artist_name.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.artist_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.song_name.label(class="form-control-label") }}
+                    {% if form.song_name.errors %}
+                        {{ form.song_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.song_name.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.song_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+
+    <h3 style="color:blue;"> Search results: </h3>
+    {% for data in raw_data %}
+        <p> {{ data }} </p>
+    {% endfor %}
+
+{% endblock %}

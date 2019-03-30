@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong> Hi there! </strong> Explore this Website and suggest me what new things can make this website different..
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="jumbotron text-center">
+    <h2> Welcome To Ak@$hJ€€Z App </h2>
+    <p class="lead"> New Blog Site with Cool Applications built on the Python Flask Web Application Framework. </p>
+    <div class="row">
+      <div class="col">
+        <a class="btn btn-primary" href="{{ url_for('applications') }}"> Browse Applications </a> 
+      </div>
+      <div class="col">
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Share Via </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="https://www.facebook.com/sharer/sharer.php?u=https%3A//akashjeezpython.pythonanywhere.com/"> Facebook </a>
+            <a class="dropdown-item" href="whatsapp://send?text=https://akashjeezpython.pythonanywhere.com/" data-action="share/whatsapp/share"> WhatsApp </a>
+            <a class="dropdown-item" href="https://twitter.com/home?status=AkashJeezApp%20-%20New%20Blog%20Site%20with%20Cool%20Applications%20built%20on%20the%20Python%20Flask%20Web%20Application%20Framework.%0Ahttps%3A//akashjeezpython.pythonanywhere.com/"> Twitter </a>
+            <a class="dropdown-item" href="https://plus.google.com/share?url=https%3A//akashjeezpython.pythonanywhere.com/"> Google+ </a>
+            <a class="dropdown-item" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//akashjeezpython.pythonanywhere.com/&title=AkashJeezApp&summary=New%20Blog%20Site%20with%20Cool%20Applications%20built%20on%20the%20Python%20Flask%20Web%20Application%20Framework.&source="> LinkedIn </a>
+            <a class="dropdown-item" href="http://www.tumblr.com/share/link?url=https://akashjeezpython.pythonanywhere.com/&name=AkashjeezApp&description=New%20Blog%20Site%20with%20Cool%20Applications%20built%20on%20the%20Python%20Flask%20Web%20Application%20Framework."> Tumblr </a>
+            <a class="dropdown-item" href="http://wordpress.com/press-this.php?u=https://akashjeezpython.pythonanywhere.com/&t=AkashjeezApp"> WordPress </a>
+            <a class="dropdown-item" href="http://www.evernote.com/clip.action?url=https://akashjeezpython.pythonanywhere.com/&title=AkashjeezApp"> EverNote </a>
+            <a class="dropdown-item" href="http://reddit.com/submit?url=https://akashjeezpython.pythonanywhere.com/&title=AkashjeezApp"> Reddit </a>
+            <a class="dropdown-item" href="http://digg.com/submit?url=https://akashjeezpython.pythonanywhere.com/&title=AkashjeezApp"> Digg </a>
+            <a class="dropdown-item" href="ttp://bufferapp.com/add?text=AkashjeezApp&url=https://akashjeezpython.pythonanywhere.com/"> BufferApp </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div align="center"> <h4 style="color:blue;"> <strong> Today's Quote: </strong> {{ fortune }} </h4> </div>
+
+ 	<h4 style="color:red;"> Posts &nbsp;
+    <a href="{{ url_for('users') }}"> Registered Users </a> &nbsp;
+    Today's Date: {{ date }} 
+  </h4>
+
+    {% for post in posts.items %}
+        <article class="media content-section">
+          <img class='rounded-circle article-img' src="{{ url_for('static', filename = 'profile_pics/' + post.author.image_file) }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{{ url_for('user_posts', username=post.author.username) }}"> {{ post.author.username }} </a>
+              <small class="text-muted"> {{ post.date_posted.strftime('%d-%m-%Y') }} </small>
+            </div>
+            <h3> <a class="article-title" href="{{ url_for('post', post_id=post.id) }}"> {{ post.title }} </a></h3>
+            <p class="article-content"> {{ post.content }} </p>
+          </div>
+        </article>
+    {% endfor %}
+
+    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    	{% if page_num %}
+    		{% if posts.page == page_num %}
+    			<a class='btn btn-info mb-4' href="{{ url_for('home', page=page_num) }}"> {{ page_num }} </a>
+    		{% else %}
+    			<a class='btn btn-outline-info mb-4' href="{{ url_for('home', page=page_num) }}"> {{ page_num }} </a>
+    		{% endif %}
+    	{% endif %}
+    {% endfor %}
+
+{% endblock %}

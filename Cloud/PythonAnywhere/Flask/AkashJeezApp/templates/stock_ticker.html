@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h2> Stock Ticker App using Python Flask Application </h2>
+
+	<div class='container'>
+		<div class="row">
+			<div class="col">
+      			<table class="table table-hover" border=1>
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col"> Stock Ticker </th>
+							<th scope="col"> High </th>
+							<th scope="col"> Low </th>
+							<th scope="col"> Open </th>
+							<th scope="col"> Close </th>
+							<th scope="col"> Volume </th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for data in raw_data %}
+							<tr>
+								<td> {{ data[0] }} </td>
+								<td> {{ '%0.2f'| format(data[1]|float) }} </td>
+								<td> {{ '%0.2f'| format(data[2]|float) }} </td>
+								<td> {{ '%0.2f'| format(data[3]|float) }} </td>
+								<td> {{ '%0.2f'| format(data[4]|float) }} </td>
+								<td> {{ '%0.2f'| format(data[5]|float) }} </td>
+							</tr>
+						{% endfor %}
+    				</tbody>
+    			</table>
+    		</div>
+		</div>
+	</div>
+
+{% endblock %}

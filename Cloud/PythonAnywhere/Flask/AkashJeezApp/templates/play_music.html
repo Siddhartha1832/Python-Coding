@@ -1,0 +1,97 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <h2> Play Music </h2>
+  <div class="content-section">
+    <form method="POST" action="{{ url_for('play_music') }}">
+      {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.audio_path.label(class="form-control-label") }}
+                    {% if form.audio_path.errors %}
+                        {{ form.audio_path(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.audio_path.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.audio_path(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+
+  <audio controls>
+    <source src="{{ audio_url }}" type="audio/mpeg">
+  </audio>
+
+  <hr>
+  <h2> Play Sample Music </h2>
+  <div class='container'>
+    <div class="row">
+      <div class="col">
+        <b> Song Name : Alan Walker - Faded </b>
+      </div>
+      <div class="col">
+        <audio controls>
+          <source src="http://djjohal4u.info/music/temp/___Faded_(www.djjohal4u.info).mp3" type="audio/mpeg">
+        </audio>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <b> Song Name : 50 Cent - In Da Club </b>
+      </div>
+      <div class="col">
+        <audio controls>
+          <source src="http://cdn4.muzmo.ru/cuts/e3/aa/e3aa06631458e871d7e760f01b2791b9/34907695/muzmo_ru_50_Cent_-_In_Da_Club_b64f0d241.mp3?sid=1u30sima3nm7i3kbt4pmo7n5d5" type="audio/mpeg">
+        </audio>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <b> Song Name : The Chainsmoker - Closer </b>
+      </div>
+      <div class="col"> 
+        <audio controls>
+          <source src="http://newmrjatt.com/siteuploads/files/sfd5/2474/Closer%20(The%20Chainsmokers)%20Ft.Halsey%20-%20320Kbps(NewMrjatt.Com).mp3" type="audio/mpeg">
+        </audio>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <b> Song Name : Charlie Puth - We Don't Talk Anymore </b>
+      </div>
+      <div class="col">
+        <audio controls>
+          <source src="https://newmrjatt.com/siteuploads/files/sfd2/617/Charlie%20Puth%20-%20We%20Dont%20Talk%20Anymore%20(feat.%20Selena%20Gomez)%20-%20128Kbps(NewMrjatt.Com).mp3" type="audio/mpeg">
+        </audio>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <b> Song Name : Skrillex & Rick Ross - Purple Lamborghini </b>
+      </div>
+      <div class="col">
+        <audio controls>
+          <source src="https://zippyshare.live/small-memory/21-purple-lamborghini-de268cd0.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <b> Song Name : Timmy Trumpet & Savage - Freaks (Mini Tone) </b>
+      </div>
+      <div class="col">
+        <audio controls>
+          <source src="https://freeringtones.site/wp-content/uploads/edd/2018/11/Freaks-Timmy-Trumpet-Savage.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+    </div>
+  </div>
+  
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h2> Age Calculator </h2>
+	<div class="content-section">
+		<form method="POST" action="{{ url_for('age_calculator') }}">
+			{{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.dob.label(class="form-control-label") }}
+                    {% if form.dob.errors %}
+                        {{ form.dob(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.dob.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.dob(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+
+    {% if age_calc %}
+        <h3 style="color:green;"> Age is {{ '%0.2f'| format(age_calc|float) }} </h3>
+    {% else %}
+        <h2> Type Date of Birth in this format (DD-MM-YYYYY) </h2>
+    {% endif %}
+
+
+{% endblock %}

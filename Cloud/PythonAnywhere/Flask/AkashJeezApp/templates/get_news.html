@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <h2> Google - Get Live News App </h2>
+
+  {% for data in raw_data %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <small class="text-muted"> Publised Date: {{ data[2] }} </small>
+       </div>
+        <h3> {{ data[0] }} <a style="color:blue;" href="{{ data[1] }}"> [Link] </a> </h3>
+      </div>
+    </article>
+  {% endfor %}
+
+{% endblock %}

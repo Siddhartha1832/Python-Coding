@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h2> Love Calculator using Python </h2>
+	<div class="content-section">
+		<form method="POST" action="{{ url_for('love_calculator') }}">
+			{{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.boy_name.label(class="form-control-label") }}
+                    {% if form.boy_name.errors %}
+                        {{ form.boy_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.boy_name.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.boy_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.girl_name.label(class="form-control-label") }}
+                    {% if form.girl_name.errors %}
+                        {{ form.girl_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.girl_name.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.girl_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+
+    <h4 style="color:green;"> {{ score }} </h4>
+
+{% endblock %}

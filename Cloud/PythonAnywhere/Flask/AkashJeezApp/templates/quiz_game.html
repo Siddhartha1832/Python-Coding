@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+	<h2> Play Quiz Game </h2>
+	<form action='/quiz' method='POST'>
+		{% for i in questions_shuffled %}
+	    	<article class="media content-section">
+	    		<div class="media-body">
+		   			<li> <b> {{i}} </b> </li> <br>
+		       		{% for j in questions[i] %}
+		           		<input type='radio' value='{{ j }}' name='{{ i }}' /> {{ j }} <br>
+		       		{% endfor %}
+		       	</div>
+		   	</article>
+		{% endfor %}
+	    
+    	<div class="form-group">
+    		<input class="btn btn-outline-info" type="submit" value="submit" />
+    	</div>
+	</form>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h2> Emoji Symbols </h2>
+
+	{% for data in raw_data %}
+		<article class="media content-section">
+			<div class="media-body">
+				<h4> {{ data }} </h4>
+			</div>
+		</article>
+	{% endfor %}
+
+	<h5 style="color:green;"> For More Emojis, Refer this <a href='https://www.webfx.com/tools/emoji-cheat-sheet/'> Link </a> </h5>
+    
+{% endblock %}

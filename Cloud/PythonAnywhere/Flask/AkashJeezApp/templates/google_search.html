@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h2> Get Top Links from Google Search </h2>
+	<div class="content-section">
+		<form method="POST" action="{{ url_for('google_search') }}">
+			{{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.keyword.label(class="form-control-label") }}
+                    {% if form.keyword.errors %}
+                        {{ form.keyword(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.keyword.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.keyword(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+
+    <h2> Search Results: </h2>
+
+    <div class='container'>
+        <div class="row">
+            <div class="col">
+                <table class="table table-hover" border=1>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col"> Site Name </th>
+                            <th scope="col"> Site URL </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for site_name, site_url in raw_data %}
+                            <tr>
+                                <td> {{ site_name }} </td> <td> {{ site_url }} </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

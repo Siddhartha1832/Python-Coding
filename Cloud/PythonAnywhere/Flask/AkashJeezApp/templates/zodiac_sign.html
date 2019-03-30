@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block content %}
+	<h2> Display Astrological sign or Zodiac sign for a given data of birth </h2>
+	<div class="content-section">
+		<form method="POST" action="{{ url_for('zodiac_sign') }}">
+			{{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.dob.label(class="form-control-label") }}
+                    {% if form.dob.errors %}
+                        {{ form.dob(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.dob.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.dob(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+
+    <h3 style="color:green;"> Astro Sign is {{ result }} </h3>
+    
+{% endblock %}
