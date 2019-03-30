@@ -1,0 +1,23 @@
+# Pivotal Sign Up - https://account.run.pivotal.io/z/uaa/sign-up
+
+# Pivotal Login - https://login.run.pivotal.io/login
+# Pivotal Documentation - https://docs.pivotal.io/pivotalcf/2-2/cf-cli/cf-help.html
+# Download and install Pivotal CLI (Command line interface) 
+- https://docs.pivotal.io/pivotalcf/1-12/cf-cli/install-go-cli.html
+
+# Pivotal Login using CLI:
+# Syntax > cf login [-a API_URL] [-u USERNAME] [-p PASSWORD] [-o ORG] [-s SPACE] [--sso | --sso-passcode PASSCODE]
+eg > cf login -a https://api.run.pivotal.io
+eg > cf login -a https://api.run.pivotal.io -o <<org_name>>
+// enter your Pivotal login email ID and password
+// where, -a (for API end point) - https://api.run.pivotal.io
+
+# Push your code to Cloud Foundary Pivotal. (application name is user defined)
+# Push a new app or sync changes to an existing app
+# Syntax > cf push <<appname>>
+eg > cf push application1
+
+# Restage Your Application 
+# it stops your application and restages it, by compiling a new droplet and starting it.
+> cf restage <<appname>>
+

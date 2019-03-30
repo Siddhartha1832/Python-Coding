@@ -1,0 +1,66 @@
+
+## Regular Expession ##
+
+# find phone number in a string
+import re
+sent = 'my phone number is 730-565-0852'
+# compile() created regex object that tells us what format we are looing for. eg: \d is integer.
+# mo is match object . mo.group() return actual object.
+sent_regex = re.compile(r'\d\d\d-\d\d\d-\d\d\d\d')
+mo = sent_regex.search(sent)
+print(f'Match object : {mo}')
+print(f'Phone Number in string : {mo.group()}')
+
+
+sent_regex = re.compile(r'(\d\d\d)-(\d\d\d-\d\d\d\d)')
+mo = sent_regex.search(sent)
+print(f'Match object : {mo}')
+print(f'Phone Number in string : {mo.group()}')
+print(f'Phone Number 10 digits in string : {mo.group(0)}')
+print(f'Phone Number first 3 digits in string : {mo.group(1)}')
+print(f'Phone Number last 7 digits in string : {mo.group(2)}')
+
+# pipes
+sent2 = "I love fruits. I love all sorts of berries. and i'm a fan of strawberries and blueberries"
+# pipes will look blueberries or strawberries, whichever finds first, return that.
+fruit_regex = re.compile(r'strawberries|blueberries')
+mo = fruit_regex.search(sent2)
+mo.group() # output - strawberries
+mo = fruit_regex.search('blueberries and strawberries')
+mo.group() # output - blueberries
+
+# ? sign 0/1 - ts in occurance of this or not. its optional value
+# some people may give 10 digits with area code or 7 digits without area code numb. so we can keep first 3 disgits as optional.
+phone_regex = re.compile(r'(\d\d\d-)?\d\d\d-\d\d\d\d')
+mo = phone_regex.search('my phone number is 730-565-0852')
+print(f'Phone Number in string : {mo.group()}')
+# output - Phone Number in string : 730-565-0852
+mo = phone_regex.search('my phone number is 565-0852')
+print(f'Phone Number in string : {mo.group()}')
+# output - Phone Number in string : 565-0852
+
+
+# * sign eg: batman works, batwoman works, repeation dealy 'wo' works.
+bat_regex = re.compile(r'bat(wo)*man')
+mo = bat_regex.search('I am batman')
+print(f'Output: {mo.group()}')
+# Output: batman
+mo = bat_regex.search('I am batwoman')
+print(f'Output: {mo.group()}')
+# Output: batwoman
+mo = bat_regex.search('I am batwowowoman')
+print(f'Output: {mo.group()}')
+# Output: batwowowoman
+mo = bat_regex.search('I am batwowowowoman')
+print(f'Output: {mo.group()}')
+Output: batwowowowoman
+
+# + sign eg: batman wont work, batwoman work, repeation dealy 'wo' work.
+bat_regex = re.compile(r'bat(wo)+man')
+mo = bat_regex.search('I am batwoman')
+print(f'Output: {mo.group()}')
+# Output: batwoman
+mo = bat_regex.search('I am batwowoman')
+print(f'Output: {mo.group()}')
+# Output: batwowoman
+

@@ -1,0 +1,176 @@
+
+#### Heroku - Cloud Application Platform ####
+
+## Cloud Application Platform as a service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud.
+## Language Support such as Node, Ruby (frameworks like Sinatra or Ruby-on-Rails), Java, PHP, Python (frameworks like Django or Flask), Go, Scala, Clojure.
+## Login/Signup heroku account - https://id.heroku.com/login
+## Reference to deploy python app - https://devcenter.heroku.com/articles/getting-started-with-python
+## Heroku Architecture - https://devcenter.heroku.com/categories/heroku-architecture
+## Download and Install Heroku CLI (Command Line Interface) - https://devcenter.heroku.com/articles/heroku-command-line
+## Download Git - https://git-scm.com/downloads
+## Use git in the command line or a GUI tool to deploy this app.
+## Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. Git is easy to learn and has a tiny footprint with lightning fast performance.
+## Virtualenv is a tool to create isolated Python environments. virtualenv creates a folder which contains all the necessary executables to use the packages that a Python project would need. It can be used standalone, in place of Pipenv.
+
+
+### Local Computer ###
+
+## Sample Setup to deploy Python flask app on your local computer.
+## Create Folder 'Flask' 
+## Open command prompt and go to path till you find folder called 'Flask'
+
+## Install Virtualenv by typing below command in Command prompt.
+	Flask> pip install --upgrade virtualenv
+
+## Create virtual environment called 'deploy' for flask application in command prompt.
+	Flask> virtualenv deploy
+
+## Deactivate 'deploy' virtualenv in command prompt (optional).
+	Flask> deactivate
+
+## Activate 'deploy' virtualenv in command prompt.
+	Flask> deploy\scripts\activate.bat
+	(deploy) Flask>
+
+## Install Flask and gunicorn modules in comamnd prompt.
+	(deploy) Flask> pip install flask
+	(deploy) Flask> pip install gunicorn
+
+## Create file "flaskapp.py" under directory 'Flask' and paste below code
+
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+	return "<h2> Deployed Python Flask Web Application on Heroku Cloud! </h2>"
+
+if __name__ == '__main__':
+	app.run()
+
+
+## Create file "Procfile" under directory 'Flask' and paste below code
+## flaskapp is the main python filename. If you aree changing main python filename, make sure the filename updated in Profile file.
+
+web: gunicorn flaskapp:app
+
+
+## Create file ".gitignore" under directory 'Flask' and paste below code
+
+deploy
+*.pyc
+*.DS_Store
+
+
+## Create file "README.md" under directory 'Flask' and paste below code
+
+Deploy Simple Python Flask web application to heroku Cloud aPaaS (Application platform as a service)..
+
+Prerequisite:
+Create Heroku account - https://signup.heroku.com/login
+Install Python 3.X version -> https://www.python.org/downloads/
+Install MODULES like virtualenv, flask, gunicorn -> pip install MODULES
+
+
+## Get all modules in virtualenv 'deploy' adn save into requirements text file.
+	(deploy) Flask> pip freeze > requirements.txt
+
+## We use GIT to pull/push the code from/to github repository (online Source version Control).
+## Initialize Git to create new git repo.
+	(deploy) Flask> git init
+		Initialized empty Git repository in ../Flask/.git/
+
+## You can see ".git" folder under directory "Flask".
+## Push all files under directory 'Flask' to git (local computer) for staging (taking a snapshot).
+	(deploy) Flask> git add .
+
+## Commit the changes in local directory to push into Git.
+	(deploy) Flask> git commit -m "committed!"
+
+## Login your Heroku account using command prompt (give heroku account email and password)
+	(deploy) Flask> heroku login
+
+## Create an app on Heroku, which prepares Heroku to receive your source code
+	(deploy) Flask> heroku create
+	https://abcde-xyz-1234.herokuapp.com/ | https://git.heroku.com/abcde-xyz-1234.git
+
+## Opening the Heroko app URL in browser.
+## Auto-Generated application name -> abcde-xyz-1234
+	(deploy) Flask> heroku open
+	Opening https://abcde-xyz-1234.herokuapp.com/
+
+## Pushing current code (Local computer - master) to Heroku Git (git.heroku.com) (Online).
+	(deploy) Flask> git push heroku master
+
+## Renaming heroku applicaition name
+## syntax: > heroku apps:rename new_app_name --app old_app_name
+	(deploy) Flask> heroku apps:rename akashjeez-flask-app1 --app abcde-xyz-1234
+
+Old URL --> https://abcde-xyz-1234.herokuapp.com/
+New URL --> https://akashjeez-flask-app1.herokuapp.com/ 
+
+## After renaming application name, old URL won't work, visit new URL in browser.
+--> https://akashjeez-flask-app1.herokuapp.com/ 
+
+
+## IMPORTANT NOTE:
+## If you are making any changes in code in local machine, please push changes into Git repoistory.
+	(deploy) Flask> git init
+	(deploy) Flask> git add .
+	(deploy) Flask> git commit -m "Commited New Changes!"
+	(deploy) Flask> git push heroku master
+
+## Use Git to clone APPNAME's source code to your local machine once you login heroku in CLI.
+	(deploy) Flask> heroku git:clone -a APPNAME
+	(deploy) Flask> cd APPNAME
+
+## View Heroku dashboard to see apps running.
+--> https://dashboard.heroku.com/
+
+--------------------------------------------------------------------
+
+## Add code in "flaskapp.py" under directory 'Flask'
+
+from flask import Flask, render_template
+.........
+@app.route('/welcome')
+def welcome():
+	return render_template('welcome.html')
+........
+
+
+## Create 2 folders "templates", "static" under directory 'Flask'
+
+## Bootstrap official homepage - https://getbootstrap.com/
+## Download Compiled CSS and JS bootstrap compressed file - https://getbootstrap.com/docs/4.1/getting-started/download/
+## Extract Bootstrap compressed file, you will see "CSS" and "JS" folders.
+## Copy CSS and JS folders to folder "static" under directory "Flask".
+
+## Add file "welcome.html" under directory "templates"
+
+<html>
+<head>
+	<title> AkashJeez </title>
+	<meta name='viewport' content='width-device-width, initial-scale=1.0'>
+	<link href='static/bootsrap.min.css' rel='stylesheet' media='screen'>
+</head>
+<body>
+	<div>
+		<h2> Welcome to Flask! </h2> <br>
+		<p> Click <a href='/'> here </a> to go home </p>
+	</div>
+</body>
+</html>
+
+## If you are making any changes in code in local machine, please push changes into Git repoistory.
+	(deploy) Flask> git init
+	(deploy) Flask> git add .
+	(deploy) Flask> git commit -m "Commited New Changes!"
+	(deploy) Flask> git push heroku master
+
+## Browse the application to check its running.
+--> https://akashjeez-flask-app1.herokuapp.com/
+## Browse welcome page
+--> https://akashjeez-flask-app1.herokuapp.com/welcome
+
+

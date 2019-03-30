@@ -1,0 +1,498 @@
+
+## Django Web Application ##
+
+- web framework for python to develop website.
+- Django is high level due to low customization and control for the developer. Flask is low level customizable and also a web framework for python to develop website.
+- Secured, efficient, scalable.
+
+# Requirements
+
+# Install Python (latest version) URL - https://www.python.org/downloads/
+
+# virtualenv is a tool to create isolated Python environments. virtualenv creates a folder which contains all the necessary executables to use the packages that a Python project would need. It can be used standalone, in place of Pipenv.
+
+# install below modules in command prompt
+	> pip install --upgrade pip
+	> pip install django --upgrade
+	> pip install virtualenv --upgrade
+
+# Display list of installed modules.
+	> pip list
+
+# Get Version of module (eg: django)
+	> python -m django --version
+
+# Display specific module details and dependency(eg: numpy)
+	> pip show numpy
+
+# Create new virtual environemnt for Django web application names as 'env'
+	> virtualenv env
+
+# Activate the virtual environment 'env'
+	> .\env\Scripts\activate.bat
+
+# Install required modules if you want for django web application. (eg: pandas)
+	> pip install pandas
+
+# Create Django project with user defined project name'mysite'
+	> django-admin startproject mysite
+
+# You can the structure of the django project 'mysite'
+	> mysite/
+		-> manage.py
+		-> mysite/
+			--> __init__.py
+			--> settings.py
+			--> urls.py
+			--> wsgi.py
+
+# mysite/ -> root directory is just a container for your project. Its name doesn’t matter to Django; you can rename it to anything you like.
+
+# manage.py ->  A command-line utility that lets you interact with this Django project in various ways. You can read all the details about manage.py in django-admin and manage.py.
+
+# The inner mysite/ directory is the actual Python package for your project. Its name is the Python package name you’ll need to use to import anything inside it (e.g. mysite.urls).
+
+# mysite/__init__.py -> An empty file that tells Python that this directory should be considered a Python package.
+
+# mysite/settings.py -> Settings/configuration for this Django project. Django settings will tell you all about how settings work.
+
+# mysite/urls.py -> The URL declarations for this Django project; a “table of contents” of your Django-powered site.
+
+# mysite/wsgi.py -> An entry-point for WSGI-compatible web servers to serve your project.
+
+
+# My current directoy after activated virtualenv -> 
+	(env) .\mysite> c:\APT\Programming\python\Django>
+
+# Check django site working using below command and browse 'http://127.0.0.1:8080/'
+	(env) .\mysite> python manage.py runserver 8080
+
+# Get into 'mysite' directory
+	(env) .\mysite> cd mysite
+
+# Create new application 'polls' under django project 'mysite'
+	(env)  .\mysite> > python manage.py startapp polls
+
+# Files under 'polls' application under 'mysite' django project.
+	(env) .\mysite> mysite\
+	  				polls\
+	  					-> __init__.py
+	  					-> admin.py
+	  					-> apps.py
+	  					-> tests.py
+	  					-> views.py  	
+	  					-> Migration
+	  						--> __init__.py
+
+## Edit the code 'models.py' under directory '/mysite/polls/models.py'
+
+from django.db import models
+# Create new model 'Question' with 2 fields (question_text, pub_date) 
+# Create new model 'Choice' with 2 fields (choce_text, votes) 
+class Question(models.Model):
+	question_text = models.CharField(max_length = 100)
+	pub_date = models.DateTimeField('date published')
+
+class Choice(models.Model):
+	choice_text = models.CharField(max_length = 200)
+	votes = models.IntegerField(default = 0)
+	question = models.ForeignKey(Question, on_delete = models.CASCADE)
+
+
+## Add 'polls' application in below 'settings.py' under directory '/mysite/settings.py'
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'polls',
+]
+
+## We have to migrate if any changes made in 'models.py' under pools application ('/mysite/polls/')
+	(env) .\mysite> python manage.py makemigrations polls
+					Migrations for 'polls':
+  						polls\migrations\0001_initial.py
+    						- Create model Choice
+    						- Create model Question
+    						- Add field question to choice
+
+# Commit 'polls' application like github.
+	(env) .\mysite> python manage.py migrate
+
+# Open the python shell under django project 'mysite' in this way
+	(env) .\mysite> python manage.py shell
+	>>> import django
+	>>> django.setup() 	# Setup() allows us to access DB values
+	>>> from polls.models import Question, Choice
+	>>> Question.objects.all()
+	<QuerySet []>
+	>>> from django.utils import timezone
+	>>> q = Question(question_text = 'What si your name', pub_date = timezone.now())
+	>>> q.save()
+	# After added question, you see the difference before and after addded the quesion.
+	>>> Question.objects.all()
+	<QuerySet [<Question: Question object (1)>]>
+
+## Edit the code 'models.py' by add __str__() in both class under directory '/mysite/polls/models.py'
+
+from django.db import models
+# Create new model 'Question' with 2 fields (question_text, pub_date) 
+# Create new model 'Choice' with 2 fields (choce_text, votes) 
+class Question(models.Model):
+	question_text = models.CharField(max_length = 100)
+	pub_date = models.DateTimeField('date published')
+
+	def __str__(self):
+		return self.question_text
+
+class Choice(models.Model):
+	choice_text = models.CharField(max_length = 200)
+	votes = models.IntegerField(default = 0)
+	question = models.ForeignKey(Question, on_delete = models.CASCADE)
+
+	def __str__(self):
+		return self.choice_text
+
+# Close the shell and open again under django project 'mysite' in this way
+	(env) .\mysite> python manage.py shell
+	>>> import django
+	>>> django.setup() 	# Setup() allows us to access DB values
+	>>> from polls.models import Question, Choice
+	>>> Question.objects.all()
+	<QuerySet [<Question: What si your name>]>
+	>>> q = Question.objects.get(pk=1) # Dataabse use ID or pk to get question.
+	# Create choice(s) for question and save it.
+	>>> q.choice_set.create(choice_text = 'jeez', votes = 0)
+	<Choice: jeez>
+	>>> q.choice_set.create(choice_text = 'akash', votes = 0)
+	<Choice: akash>
+	>>> q.choice_set.create(choice_text = 'akashjeez', votes = 0)
+	<Choice: akashjeez>
+	>>> q.save()
+
+# Get access to admin tool.
+	(env) .\mysite> python manage.py createsuperuser
+	Username (leave blank to use 'h225057'): akashjeez
+	Email address: akashit63@gmail.com
+	Password: akash123
+	Password (again): akash123
+	Superuser created successfully.
+
+# Delete the superuser in shell (eg: username is joebloggs)
+	(env) .\mysite> python manage.py shell	
+	>>> from django.contrib.auth.models import User
+	>>> User.objects.get(username="joebloggs", is_superuser=True).delete()
+	(1, {'admin.LogEntry': 0, 'auth.User_groups': 0, 'auth.User_user_permissions': 0, 'auth.User': 1})
+
+# Check the admin access by run the django project 'mysite'
+	(env) .\mysite> python manage.py runserver 8080
+	# Brorse this url ->  http://127.0.0.1:8080/admin/
+	# Give username as akashjeez and password as akash123 and press login button.
+	# you can add user or create group to add number of users to access this web application.
+
+## Edit the code 'admin.py' under directory '/mysite/polls/admin.py'
+
+from django.contrib import admin
+# Register your models here.
+from .models import Question, Choice
+admin.site.register(Question)
+admin.site.register(Choice)
+
+# Refresh the URL to see poll's application question and choice -> http://127.0.0.1:8080/admin/
+
+# In admin webpage, -> Home -> Polls -> Question -> Add Question and date/time -> Click Save.
+
+# In admin webpage, -> Home -> Polls -> Choice -> Add choice -> Click 'Save and add another' to save multiple choices.
+
+## Edit the code 'urls.py' under directory '/mysite/urls.py' to access the 'polls' application.
+
+from django.contrib import admin
+from django.conf.urls import url, include
+urlpatterns = [
+	url(r'^admin/', admin.site.urls),
+	url(r'^polls/', include('polls.urls')),
+]
+
+## Create new file 'urls.py' under directory '/mysite/polls/' and add below code.
+
+from django.conf.urls import url
+from . import views
+urlpatterns = [
+	url(r'^$', views.index, name='index'),
+	# 127.0.0.1/polls/
+]
+
+## Edit the code 'views.py' under directory '/mysite/polls/views.py'
+
+from django.shortcuts import render
+from django.http import HttpResponse
+def index(request):
+	return HttpResponse('Awesome job guys! This is the index page of our polls application.')
+
+# Check the site again by run the django project 'mysite'
+	(env) .\mysite> python manage.py runserver 8080
+	# Access the polls application -> http://127.0.0.1:8080/polls/
+	# and see the Httpresponse text under directory '/mysite/polls/views.py'
+
+## Edit the code 'views.py' under directory '/mysite/polls/views.py'
+
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import Question
+# Create your views here.
+def index(request):
+	latest_questions = Question.objects.order_by('-pub_date')[:5]
+	output = ', '.join(q.question_text for q in latest_questions)
+	#return HttpResponse('Awesome job guys! This is the index page of our polls application.)
+	return HttpResponse(output)
+
+def detail(request, question_id):
+	return HttpResponse('This is the detail view of the question : {}'.format(question_id))
+
+def results(request, question_id):
+	return HttpResponse('These are the results of  the question : {}'.format(question_id))
+
+def vote(request, question_id):
+	return HttpResponse('Vote on question : {}'.format(question_id))
+
+
+# Check the site again by run the django project 'mysite'
+	(env) .\mysite> python manage.py runserver 8080
+	# Access the polls application -> http://127.0.0.1:8080/polls/
+	# and see the Httpresponse text under directory '/mysite/polls/views.py'
+	# it will show the questions reside in this 'polls' application.
+
+## Create folder 'templates' under directory '/mysite/polls/template/polls/' and create file 'index.html' inside and add below code
+
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset="utf-8">
+	<title> Title</title>
+</head>
+<body>
+{% if latest_questions %}
+	<ul>
+		{% for question in latest_questions %}
+			<li><a href='/polls/{{question.id}}'><b> {{question.question_text}} </b></a></li>
+		{% endfor %}	
+	</ul>
+{% else %}
+	<p> You don't have any questions, Please add some. </p>
+{% endif %}
+</body>
+</html>
+
+## Edit the code 'views.py' under directory '/mysite/polls/views.py'
+
+from django.shortcuts import render
+from django.http import HttpResponse
+from .models import Question
+from django.template import loader, RequestContext
+# Create your views here.
+
+def index(request):
+	latest_questions = Question.objects.order_by('-pub_date')[:5]
+	context = { 'latest_questions': latest_questions }
+	return render(request, 'polls/index.html', context)
+
+def detail(request, question_id):
+	return HttpResponse('This is the detail view of the question : {}'.format(question_id))
+
+def results(request, question_id):
+	return HttpResponse('These are the results of  the question : {}'.format(question_id))
+
+def vote(request, question_id):
+	return HttpResponse('Vote on question : {}'.format(question_id))
+
+
+# Check the site again by run the django project 'mysite'
+	(env) .\mysite> python manage.py runserver 8080
+	# Access the polls application -> http://127.0.0.1:8080/polls/
+	# and see the Httpresponse text under directory '/mysite/polls/views.py'
+	# it will show the questions with ID (in hyperlink) reside in this 'polls' application.
+
+## Edit the pirce of code 'views.py' under directory '/mysite/polls/views.py'
+
+def detail(request, question_id):
+	question = Question.objects.get(pk = question_id)
+	return render(request, 'polls/detail.html', {'question':question})
+
+## Create file 'detail.html' under directory '/mysite/polls/template/polls/' 
+
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset="utf-8">
+	<title> Title</title>
+</head>
+<body>
+<h1> {{ question.question_text }} </h1>
+<ul>
+	<% for choice in question.choice_set.all %>
+		<li> {{choice.choice_text}} </li>
+	<% endfor %>
+</ul>
+</body>
+</html>
+
+# Check the site again by run the django project 'mysite'
+	(env) .\mysite> python manage.py runserver 8080
+	# Access the polls application -> http://127.0.0.1:8080/polls/
+	# and see the Httpresponse text under directory '/mysite/polls/views.py'
+	# it will show the questions with ID (in hyperlink) reside in this 'polls' application.
+
+
+
+--------------------------------------------------------------------------------------------------------
+
+## Django Projet - Application 2 => TODO ##
+
+# Create Django project with user defined project name 'todo'
+	> django-admin startproject todo
+
+# You can the structure of the django project 'todo'
+	> todo/
+		-> manage.py
+		-> todo/
+			--> __init__.py
+			--> settings.py
+			--> urls.py
+			--> wsgi.py
+
+# Get into 'todo' directory
+	(env) .\todo> cd todo
+
+# Check django site working using below command and browse 'http://127.0.0.1:8080/'
+	(env) .\todo> python manage.py runserver 8080
+
+# Create new application 'todo_list' under django project 'todo'
+	(env) .\todo> python manage.py startapp todo_list
+
+## Files under 'todo_list' application under 'todo' django project.
+	(env) .\todo> todo\
+	  				todo_list\
+	  					-> __init__.py
+	  					-> admin.py
+	  					-> apps.py
+	  					-> tests.py
+	  					-> views.py  	
+	  					-> Migration
+	  						--> __init__.py
+
+## Add 'todo_list' application in below 'settings.py' under directory '/todo/settings.py'
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'todo_list',
+]
+
+## Edit the code 'url.py' under directory '/todo/url.py'
+
+from django.contrib import admin
+from django.urls import path, include
+from todo_list import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('todo_list.urls'))
+]
+
+## Edit the code 'views.py' under directory '/todo/todo-list/views.py'
+
+from django.shortcuts import render
+def home(request):
+	return render(request, 'home.html', {})
+
+## Create folder 'templates' under directory '/todo/todo_list/template/todo_list/' and create file 'home.html' inside and add below code
+
+Hello World
+
+## Create file 'url.py' for 'todo_list' application under directory '/todo/todo_list/url.py'
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+	path('', views.home, name='home')
+]
+
+# Check django site working using below command and browse 'http://127.0.0.1:8080/'
+	(env) .\todo> python manage.py runserver 8080
+	# to see 'Hello world' in above URL.
+
+
+# Got front end design for demo - https://getbootstrap.com/docs/4.1/getting-started/introduction/
+
+## Create file 'base.html' udner directory '/todo/todo-list/templates/todo-list/base.html' and add below code
+# made some modifications.
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title> getBootStrap </title>
+  </head>
+  <body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="{% url 'home' %}"> To-Do List</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+    	<% csrf_token %>
+      <input class="form-control mr-sm-2" type="search" placeholder="Add Item" aria-label="Search" name='item'>
+      <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit"> Add To List </button>
+    </form>
+  </div>
+</nav>
+
+	<br/>
+	<div class ="container">
+	{% block content %}
+	{% endblock %}
+	</div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
+## We have to migrate if any changes made in 'models.py' under pools application ('/todo/todo-list/')
+	(env) .\todo> python manage.py makemigrations todo-list
+					Migrations for 'todo_list':
+  						todo_list\migrations\0001_initial.py
+  					        - Create model List
+
+# Commit 'todo-list' application like github.
+	(env) .\todo>python manage.py migrate
+		Operations to perform:
+  		Apply all migrations: admin, auth, contenttypes, sessions, todo_list
+		Running migrations:
+  		Applying todo_list.0001_initial... OK
+
+

@@ -1,0 +1,169 @@
+
+## Dash - Python ##
+
+- Dash is a Python framework for building analytical web applications. No JavaScript required.
+- Built on top of Plotly.js, React, and Flask, Dash ties modern UI elements like dropdowns, sliders, and graphs to your analytical Python code.
+
+# Dash Introduction - https://dash.plot.ly/introduction
+
+---------------------------------------------------------------------------------------------------
+## Example 1- Display string in browser
+
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+app = dash.Dash()
+app.layout = html.Div('Dash tutorials')
+
+if __name__ == '__main__':
+	app.run_server(debug=True)
+
+### Comments:
+dash_core_components - core components like graph, charts etc.
+dash_html_components - about html tags.
+
+## Run above code and hit this URL to see output
+  > http://127.0.0.1:8050
+  > Browser will display text 'Dash tutorials'
+---------------------------------------------------------------------------------------------------
+## Example 2 - Display string with html tags
+
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+app = dash.Dash()
+app.layout = html.Div(children=[html.H1('Dash tutorialssss')])
+
+if __name__ == '__main__':
+	app.run_server(debug=True)
+
+### Comments:
+Content should be children and it can also be list. we can apply tag also
+---------------------------------------------------------------------------------------------------
+## Example 3 - Small line and bar charts
+
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+app = dash.Dash()
+app.layout = html.Div(children=[
+	html.H1('Dash tutorials'),
+	dcc.Graph(id='example',
+		figure={
+			'data' : [
+				{'x':[1,2,3,4,5], 'y':[7,4,8,2,5], 'type':'line', 'name':'boats'},
+				{'x':[1,2,3,4,5], 'y':[4,6,1,7,2], 'type':'bar', 'name':'cars'},
+				],
+			'layout' : {
+				'title' : 'Basic Dash Example'
+				}
+		})
+	])
+
+if __name__ == '__main__':
+	app.run_server(debug=True)
+
+
+### Comments:
+dcc.Graph() functions to create graphs for data's.
+---------------------------------------------------------------------------------------------------
+## Example 4 - Get input and display output
+
+import dash
+from dash.dependencies import Input, Output
+import dash_core_components as dcc
+import dash_html_components as html
+app = dash.Dash()
+app.layout = html.Div(children=[
+	dcc.Input(id='input', value='Enter something', type='text'),
+	html.Div(id='output')
+	])
+
+@app.callback(
+	Output(component_id='output', component_property='children'),
+	[Input(component_id='input', component_property='value')]
+	)
+
+def update_value(input_data):
+	try:
+		return "Input: {}".format(input_data)
+		#return str(float(input_data)**3)
+	except:
+		return "Something went Wrong :("
+
+if __name__ == '__main__':
+	app.run_server(debug=True)
+
+
+### Comments:
+dcc.Input() & Output() - dash core components not dash html components
+callback() - python decorators and wrappers.
+---------------------------------------------------------------------------------------------------
+## Example 5 - Live Graph to visualize data 
+
+import dash, plotly, random
+from dash.dependencies import Output, Event
+import dash_core_components as dcc
+import dash_html_components as html
+import plotly.graph_objs as go
+from collections import deque
+
+X = deque(maxlen=20)
+X.append(1)
+Y = deque(maxlen=20)
+Y.append(1)
+
+app = dash.Dash(__name__)
+app.layout = html.Div(
+	[
+		dcc.Graph(id='live-graph', animate=True),
+		dcc.Interval(id='graph-update', interval=1*1000),
+    ])
+
+@app.callback(Output('live-graph', 'figure'),
+	events=[Event('graph-update', 'interval')])
+def update_graph_scatter():
+	X.append(X[-1]+1)
+	Y.append(Y[-1]+Y[-1]*random.uniform(-0.1,0.1))
+	data = go.Scatter(x = list(X), y = list(Y),
+		name = 'Scatter', mode =  'lines+markers'
+		)
+
+	return {'data': [data],'layout' : go.Layout(xaxis=dict(range=[min(X),max(X)]), 
+		yaxis=dict(range=[min(Y),max(Y)]),)}
+
+if __name__ == '__main__':
+	app.run_server(debug=True)
+
+---------------------------------------------------------------------------------------------------
+## Example 6 - Display Image in browser
+
+import dash
+import dash_html_components as html
+
+app = dash.Dash()
+
+app.layout = html.Div([
+    html.Img(src='C:/Users/H225057/Pictures/akashjeez.jpg')
+])
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
+
+
+---------------------------------------------------------------------------------------------------
+## Example 7 - 
+
+
+
+
+
+
+
+
+
+
+
+
+
+

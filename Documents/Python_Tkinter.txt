@@ -1,0 +1,203 @@
+
+### Tkinter ###
+
+## Tkinter is a Python binding to the Tk GUI toolkit. It is the standard Python interface to the Tk GUI toolkit, and is Python's de facto standard GUI. Tkinter is included with standard Linux, Microsoft Windows and Mac OS X installs of Python.
+
+## Example 1 - Display Empty tkinter window
+
+from tkinter import *
+root = Tk()
+# create window contents as children to root...
+root.mainloop()
+
+## Example 2  - Simple testing
+
+import tkinter
+tkinter._test()
+
+## Example 3 - Display Button widget with title.
+
+from tkinter import *
+from tkinter import ttk
+root = Tk() # tkinter class assigned to root window object.
+root.title('Python Tkinter GUI')  # Rename tkinter GUI window's title
+ttk.Button(root, text='Hello Tkinter!').grid()
+root.mainloop()
+
+## Example 4 - Frame widgets
+## The Frame widget is very important for the process of grouping and organizing other widgets in a somehow friendly way. It works like a container, which is responsible for arranging the position of other widgets.
+
+from tkinter import *
+root = Tk()
+root.title('TkinterGUI')
+topframe = Frame(root).pack()
+bottomframe = Frame(root).pack(side=BOTTOM, fill=Y)
+b1 = Button(topframe, text='button1', fg='red').pack()
+b2 = Button(bottomframe, text='button2', fg='blue').pack(side=LEFT)
+b3 = Button(bottomframe, text='button3', fg='blue').pack(side=RIGHT)
+root.mainloop()
+
+## Example 5 - Fitting widgets in your l=Layout
+
+from tkinter import *
+root = Tk() 
+root.title('TkinterGUI')
+one = Label(root, text='one', bg='red', fg='white').pack()
+two = Label(root, text='two', bg='green', fg='black').pack(fill=X)
+three = Label(root, text='three', bg='blue', fg='white').pack(side=LEFT, fill=Y)
+four = Label(root, text='four', bg='yellow', fg='black').pack(side=RIGHT, fill=X)
+root.mainloop()
+
+## Example 6 - Grid layout
+
+from tkinter import *
+root = Tk() 
+root.title('TkinterGUI')
+label1 = Label(root, text='Name').grid(row=0, sticky=E) # Sticky E is east
+label2 = Label(root, text='password').grid(row=1, sticky=E)
+entry1 = Entry(root).grid(row=0, column=1)
+entry2 = Entry(root).grid(row=1, column=1)
+checkbutton1 = Checkbutton(root, text='Keep me logged in').grid(columnspan=2)
+root.mainloop()
+
+## Example 7 - Binding functions to layout
+
+from tkinter import *
+root = Tk() 
+root.title('TkinterGUI')
+def printname():	print('My Name is AkashJeez!')
+Button(root, text='Print my name', command=printname).pack()
+root.mainloop()
+
+## Example 8 - Mouse Click Events
+
+from tkinter import *
+root = Tk() 
+root.title('TkinterGUI')
+def leftclick(event):
+	print('left click')
+def middleclick(event):
+	print('middle click')
+def rightclick(event):	p
+	rint('right click')
+
+frame = Frame(root, width=300, height=300)
+frame.bind('<Button-1>', leftclick)
+frame.bind('<Button-2>', middleclick)
+frame.bind('<Button-3>', rightclick)
+frame.pack()
+root.mainloop()
+
+## Example 9 - using Classes
+
+from tkinter import *
+root = Tk() 
+root.title('TkinterGUI')
+
+class AkashButtons:
+	def __init__(self, master):
+		frame = Frame(master)
+		frame.pack()
+		self.printbutton = Button(frame, text='Print Message', command=self.PrintMessage).pack(side=LEFT)
+		self.printbutton = Button(frame, text='Quit', command=frame.quit).pack(side=LEFT)
+
+	def PrintMessage(self):
+		print('Wow! this actually worked!')
+
+obj = AkashButtons(root)
+root.mainloop()
+
+## Example 10 - Creatng Dropdown Menus
+
+from tkinter import *
+root = Tk() 
+root.title('TkinterGUI')
+
+def doNothing():
+	print('ok ok i wont..')
+
+# MainMenu
+menu = Menu(root)
+root.config(menu=menu)
+
+filemenu = Menu(menu)
+menu.add_cascade(label='File', menu=filemenu)
+filemenu.add_command(label='New', command=doNothing)
+filemenu.add_command(label='Save', command=doNothing)
+filemenu.add_separator()
+filemenu.add_command(label='Exit', command=doNothing)
+
+editmenu = Menu(menu)
+menu.add_cascade(label='Edit', menu=editmenu)
+editmenu.add_command(label='Cut', command=doNothing)
+editmenu.add_command(label='Copy', command=doNothing)
+editmenu.add_command(label='Paste', command=doNothing)
+
+# Creating toolbar
+toolbar = Frame(root, bg='blue')
+insertbutton = Button(toolbar, text='Insert Button', command=doNothing).pack(side=LEFT, padx=2, pady=2)
+printbutton = Button(toolbar, text='Print', command=doNothing).pack(side=LEFT, padx=2, pady=2)
+toolbar.pack(side=TOP, fill=X)
+
+# Creating statusbar
+status = Label(root, text='Preparing to do nothing', bd=2, relief=SUNKEN, anchor=W).pack(side=BOTTOM, fill=X)
+
+root.mainloop()
+
+## Example 11 - Mssagbox Widget
+
+from tkinter import *
+import tkinter.messagebox as msgbox
+root = Tk() 
+root.title('TkinterGUI')
+msgbox.showinfo('Window Title', 'Monkey can live up to 300 years..')
+answer = msgbox.askquestion('Question 1', 'Do you like Python ?')
+if answer=='yes':
+	print('You are Awesome!')
+else:
+	print('You are not Awesome')
+
+root.mainloop()
+
+## Example 12 - Shapes and Graphics
+
+from tkinter import *
+root = Tk() 
+root.title('TkinterGUI')
+# Canvas allocate arera to draw shapes like HTML5 canvas.
+canvas = Canvas(root, width=300, height=300)
+canvas.pack()
+blueline = canvas.create_line(0,0,200,50, fill='blue')
+redline = canvas.create_line(0,100,200,50, fill='red')
+greenbox = canvas.create_rectangle(50,50,150,100, fill='green')
+canvas.delete(blueline) # Delete blueline shape
+canvas.delete(ALL) # Delete all shapes
+root.mainloop()
+
+## Example 13 - Display Image
+
+from tkinter import *
+root = Tk() 
+root.title('TkinterGUI')
+photo = PhotoImage(file='akashjeez.jpg') # Python code & photo should be in same directory.
+label = Label(root, image=photo)
+label.pack()
+root.mainloop()
+
+
+######## 
+
+from tkinter import *
+root = Tk()
+button = Button(root, text='Button').pack() # Create button
+def callback():	print('Click me!') # defining callback function
+button.config(command = callback) # Configuring callback() if click the button.
+button.invoke() # Invoking the button
+button.state(['disabled']) # disable the button
+button.instate(['disabled']) # status of the button like true/false
+button.state(['!disabled']) # enable the button
+logo = PhotoImage(file='sample.jpg')
+button.config(image = logo, compound = LEFT) # Image and button combined
+small_logo = logo.subsample(5,5)
+button.config(image = small_logo) # Image shrinked to small size
+

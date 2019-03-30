@@ -1,0 +1,73 @@
+
+### Deploy Python Flask Web Application to AWS Elastic Beanstalk ###
+
+## Local Computer ##
+
+## Download & Install Python (choose platform) using URL - https://www.python.org/
+## Virtualenv is a tool to create isolated Python environments. virtualenv creates a 
+folder which contains all the necessary executables to use the packages that a 
+Python project would need. It can be used standalone, in place of Pipenv.
+
+## Sample Setup to deploy Python flask app on your local computer.
+## Create Folder 'Flask' 
+## Open command prompt and go to path till you find folder called 'Flask'
+
+## Install Virtualenv by typing below command in Command prompt.
+	Flask> pip install --upgrade virtualenv
+
+## Create virtual environment called 'flaskenv' for flask application in command prompt.
+	Flask> virtualenv flaskenv
+
+## Deactivate 'flaskenv' virtualenv in command prompt (optional).
+	Flask> deactivate
+
+## Activate 'flaskenv' virtualenv in command prompt.
+	Flask> flaskenv\scripts\activate.bat
+	(flaskenv) Flask>
+
+## Install Flask and gunicorn modules in comamnd prompt.
+	(flaskenv) Flask> pip install --upgrade flask gunicorn awscli awsebcli
+
+## Create file "application.py" under directory 'Flask' and paste below code
+
+from flask import Flask # Import the Flask class from the flask module.
+application = Flask(__name__) # create the app object
+@application.route('/')
+def index():
+	return "<h2> AkashJeez Loves Coding and Racing! </h2>"
+
+# Start the server with the 'run()' method.
+if __name__ == '__main__':
+	application.debug = True
+	application.run()
+
+
+## Create file ".ebignore" under directory 'Flask' and paste below code
+
+flaskenv
+*.pyc
+
+## Get all modules in virtualenv 'flaskenv' and save into requirements text file.
+	(flaskenv) Flask> pip freeze > requirements.txt
+
+## Initialize your EB CLI repository with the eb init command
+	(flaskenv) Flask> eb init -i
+	# choose the region where it deploy
+	# create new application and give app name. eg: akashjeez-flaskapp1
+	# you are using python in your system, type 'y'
+	# choose python version.
+	# choose y or n for SSH key (no is also okay).
+
+## Create an environment and deploy your application to it with eb create.
+	(flaskenv) Flask> eb create akashjeezflaskapp1
+	# environment name is akashjeezflaskapp1
+	# it will create environment for this app, compress your code, move it to S3 and deploy it.
+
+## Deploy new version after make changes on code, type below command
+	(flaskenv) Flask> eb deploy akashjeezflaskapp1
+	# the code is compresses and move it to s3 automatically in same environment.
+
+## open your website in browser by below command
+	(flaskenv) Flask> eb open akashjeezflaskapp1
+	# url will be -> http://environmentname.subdomain.region.elasticbeanstalk.com
+	# this app url -> http://akashjeezflaskapp1.4vmwmhvsem.us-east-1.elasticbeanstalk.com

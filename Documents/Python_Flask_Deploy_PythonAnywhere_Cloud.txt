@@ -1,0 +1,58 @@
+﻿
+## Flask Web Application ##
+
+# Deploying Sample Flask App using PytohnAnywhere
+# PythonAnywhere: Host, run, and code Python in the cloud. 
+# PythonAnywhere URL: https://www.pythonanywhere.com/
+
+## Save below code as 'flaskapp.py'
+
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+   return "<h1> AKASH JEEZ! </h1>"
+
+if __name__ == '__main__':
+   app.run()
+
+# Login into PythonAnywhere URL: https://www.pythonanywhere.com/
+# Open Bash Console and start typing below comamnds
+# Create NEW Directory 'jeezsite' 
+  > mkdir jeezsite
+# get into 'jeezsite' directory
+  > cd jeezsite
+# Create new virtual environemnt for Flask web application names as 'deploy'
+  > mkvirtualenv --python=/usr/bin/python3.6 deploy
+# Get into virtualenv which we created
+  > workon deploy
+# Install Flask module in Bash Console.
+  > pip install flask --upgrade
+# Kill the Bash Console and open 'Files' tab.
+# In Files tab, you can see Directories and Files view.
+# Check 'deploy' virtual environemnt which you created in '.virtualenv/' directory.
+# Create NEW Directory 'flaskapps' and upload 'flaskapp.py' python file into it.
+# Open 'Web' tab, Click 'Add a new web app', Select 'manual Configuration', select 'Python 3.6' and click 'Next'.
+# New Web app is created (eg: akashjeez.pythonanywhere.com), browse it to see 'hello world' in browser.
+
+## Open WSGI Configuration file '/var/www/akashjeez_pythonanywhere_com_wsgi.py', remove lines 19-49
+
+import sys, os
+path = '/home/akashjeez/flaskapps'
+if path not in sys.path:
+    sys.path.append(path)
+
+from flaskapp import app as application 
+
+# Save above file and reload the web app (eg: akashjeez.pythonanywhere.com) and see the output for 'myflaskapp.py'
+
+
+
+
+
+
+
+
+
+

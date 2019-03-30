@@ -1,0 +1,214 @@
+# NLTK - Natural Language Processing
+
+# Tokenizing - Work (seperates by words) and sentence tokenizers (seperates by sentence)
+# Corpus - Body of text. Eg: medical journals.
+# Lexicon - Words and their meanings. Eg: English dictionary. 
+# Token - Each "entity" that is a part of whatever was split up based on rules. 
+  # Eg: each word is a token when a sentence is "tokenized" into words. Each sentence can also be a token, if you tokenized the sentences out of a paragraph.
+
+from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+
+print('\n Word & Sentence Tokenizing \n')
+EXAMPLE_TEXT = "Hello Mr. Smith, how are you doing today? The weather is great, and Python is awesome. The sky is pinkish-blue. You shouldn't eat cardboard."
+print('\n Word Tokenizer -> {}'.format(word_tokenize(EXAMPLE_TEXT)))
+print('\n Sentence Tokenizer -> {}'.format(sent_tokenize(EXAMPLE_TEXT)))
+listy = [word for word in word_tokenize(EXAMPLE_TEXT)]
+print('\n Word Tokenizer using List & For-Loop : \n {}'.format(listy))
+
+print('\n Stop Words \n')
+example_sent = "This is a sample sentence, showing off the stop words filtration."
+stop_words = set(stopwords.words('english'))
+word_tokens = word_tokenize(example_sent)
+filtered_sentence = [w for w in word_tokens if not w in stop_words]
+print('\n Word Tokenizer -> {}'.format(word_tokens))
+print('\n Filtered Sentence -> {}'.format(filtered_sentence))
+
+# Stemming
+# I was taking a ride in the car & I was riding in the car.
+# Above sentence(s) got same meaning.
+
+print('\n Stemming using Python List \n')
+ps = PorterStemmer()
+example_words = ["python","pythoner","pythoning","pythoned","pythonly"]
+for w in example_words:
+	print(ps.stem(w))
+
+print('\n Stemming using sentence \n')
+new_text = "It is important to by very pythonly while you are pythoning with python. All pythoners have pythoned poorly at least once."
+for w in word_tokenize(new_text):
+	print(ps.stem(w))
+
+
+
+# Part-of-speech tag list:
+
+# CC	coordinating conjunction
+# CD	cardinal digit
+# DT	determiner
+# EX	existential there (like: "there is" ... think of it like "there exists")
+# FW	foreign word
+# IN	preposition/subordinating conjunction
+# JJ	adjective	'big'
+# JJR	adjective, comparative	'bigger'
+# JJS	adjective, superlative	'biggest'
+# LS	list marker	1)
+# MD	modal	could, will
+# NN	noun, singular 'desk'
+# NNS	noun plural	'desks'
+# NNP	proper noun, singular	'Harrison'
+# NNPS	proper noun, plural	'Americans'
+# PDT	predeterminer	'all the kids'
+# POS	possessive ending	parent\'s
+# PRP	personal pronoun	I, he, she
+# PRP$	possessive pronoun	my, his, hers
+# RB	adverb	very, silently,
+# RBR	adverb, comparative	better
+# RBS	adverb, superlative	best
+# RP	particle	give up
+# TO	to	go 'to' the store.
+# UH	interjection	errrrrrrrm
+# VB	verb, base form	take
+# VBD	verb, past tense	took
+# VBG	verb, gerund/present participle	taking
+# VBN	verb, past participle	taken
+# VBP	verb, sing. present, non-3d	take
+# VBZ	verb, 3rd person sing. present	takes
+# WDT	wh-determiner	which
+# WP	wh-pronoun	who, what
+# WP$	possessive wh-pronoun	whose
+# WRB	wh-abverb	where, when
+
+
+import nltk
+from nltk.corpus import state_union
+from nltk.tokenize import PunktSentenceTokenizer
+print('\n Part of Speech Tagging - NLTK \n')
+train_text = state_union.raw("2005-GWBush.txt")
+sample_text = state_union.raw("2006-GWBush.txt")
+custom_sent_tokenizer = PunktSentenceTokenizer(train_text)
+tokenized = custom_sent_tokenizer.tokenize(sample_text)
+def process_content():
+	try:
+		for i in tokenized:
+			words = nltk.word_tokenize(i)
+			tagged = nltk.pos_tag(words)
+			print(tagged)
+	except Exception as e:
+		print(str(e))
+
+process_content()
+
+print('\n Chunking - NLTK \n')
+chunkGram = r"""Chunk: {<RB.?>*<VB.?>*<NNP>+<NN>?}"""
+chunkParser = nltk.RegexpParser(chunkGram)
+chunked = chunkParser.parse(tagged)
+print(chunked)
+chunked.draw()
+print("\n Subtrees \n\n ")
+# Chunk, S or subtrees()
+for subtree in chunked.subtrees(filter=lambda t: t.label() == 'Chunk'):
+	print(subtree)
+
+
+print('\n Chinking - NLTK \n')
+EXAMPLE_TEXT = "Mike is working in Honeywell Technology Solutions Lab Pvt Ltd, India."
+words = nltk.word_tokenize(EXAMPLE_TEXT);
+tagged = nltk.pos_tag(words)
+# True - recognize all named entities
+# False - recognize named entities as their respective type, like people, places, locations, etc.
+namedEnt = nltk.ne_chunk(tagged, binary=False)
+namedEnt.draw()
+
+
+print('\n Lemmitizing - NLTK \n')
+from nltk.stem import WordNetLemmatizer
+lemmatizer = WordNetLemmatizer()
+print(' {} -> {}'.format('better',lemmatizer.lemmatize('better', pos='a')))
+listy = ["cats","cacti","geese","rocks","python",'pythons']
+for item in listy:
+	print(" {} -> {}".format(item, lemmatizer.lemmatize(item)))
+
+
+# Corporas - Body of text
+# Path to get into Corporas folder by typing below command in RUN
+   %appdata%
+# you can see folder 'corporas' inside mail folder called 'nltk_data'
+print('\n Corporas - NLTK \n')
+from nltk.tokenize import sent_tokenize, PunktSentenceTokenizer
+from nltk.corpus import gutenberg
+sample = gutenberg.raw("bible-kjv.txt")
+tok = sent_tokenize(sample)
+for x in range(5):
+	print(tok[x])
+
+
+#  Wordnet
+from nltk.corpus import wordnet
+syns = wordnet.synsets("program")
+# [Synset('plan.n.01'), Synset('program.n.02'), Synset('broadcast.n.02'), Synset('platform.n.02'), Synset('program.n.05'), Synset('course_of_study.n.01'), Synset('program.n.07'), Synset('program.n.08'), Synset('program.v.01'), Synset('program.v.02')]
+print(syns[0].name())
+# plan.n.01
+print(syns[0].lemmas()[0].name())
+# plan
+print(syns[0].definition())
+# a series of steps to be carried out or goals to be accomplished
+print(syns[0].examples())
+# ['they drew up a six-step plan', 'they discussed plans for a new bond issue']
+
+synonyms, antonyms = [], []
+for syn in wordnet.synsets("good"):
+    for l in syn.lemmas():
+        synonyms.append(l.name())
+        if l.antonyms():
+            antonyms.append(l.antonyms()[0].name())
+
+print(set(synonyms))
+# {'practiced', 'full', 'trade_good', 'goodness', 'good', 'thoroughly', 'just', 'honorable', 'serious', 'unspoiled', 'safe', 'ripe', 'in_effect', 'commodity', 'right', 'upright', 'undecomposed', 'dear', 'secure', 'skilful', 'effective', 'skillful', 'well', 'unspoilt', 'adept', 'sound', 'expert', 'near', 'dependable', 'proficient', 'salutary', 'honest', 'estimable', 'respectable', 'beneficial', 'soundly', 'in_force'}
+print(set(antonyms))
+# {'badness', 'evilness', 'ill', 'evil', 'bad'}
+
+# Similarity between 2 Nouns (ship and boat)
+w1 = wordnet.synset('ship.n.01')
+w2 = wordnet.synset('boat.n.01')
+print(' {}%'.format(w1.wup_similarity(w2)*100))
+# 90.9090909090909%
+
+
+
+# Text Classification
+import nltk,random
+from nltk.corpus import movie_reviews
+documents = [(list(movie_reviews.words(fileid)), category) for category in movie_reviews.categories() for fileid in movie_reviews.fileids(category)]
+random.shuffle(documents)
+print(documents[1])
+all_words = [w.lower() for w in movie_reviews.words()]
+all_words = nltk.FreqDist(all_words)
+print(all_words.most_common(15))
+print(all_words["stupid"])
+
+
+# Words as features
+import nltk
+import random
+from nltk.corpus import movie_reviews
+documents = [(list(movie_reviews.words(fileid)), category) for category in movie_reviews.categories() for fileid in movie_reviews.fileids(category)]
+random.shuffle(documents)
+all_words = [w.lower() for w in movie_reviews.words()]
+all_words = nltk.FreqDist(all_words)
+word_features = list(all_words.keys())[:3000]
+
+def find_features(document):
+	words = set(document)
+	features = {}
+	for w in word_features:
+		features[w] = (w in words)
+	return features
+
+print((find_features(movie_reviews.words('neg/cv000_29416.txt'))))
+featuresets = [(find_features(rev), category) for (rev, category) in documents]
+print('\n Featuresets -> \n\n {}'.format(featuresets))
+
+
+

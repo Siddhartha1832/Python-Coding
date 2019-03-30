@@ -1,0 +1,171 @@
+# NLP - Natural Language Processing
+
+- Automated way to understand and analyze natural human languages and
+extract information from such data by applying machine learning algorithms.
+
+- Data content can be text document, image, audui, video.
+
+- Sometimes also referred to artificial intelligence to extract the linguistic 
+information from underlying data.
+
+why NLP?
+- Analyzing tons of data.
+- Identifying various languages and dialects.
+- Applying quantitative analysis.
+- handling ambiguities.
+
+- One of NLP goals is to understand various languages, process them and extract 
+info from them.
+
+- In NLP, full automation can be easily achieved by modern software libraries,
+modeules adn packages.
+
+NLP Terminologies:
+-- Word boundaries - Determines where one work ends nd the other begins.
+-- Tokenization - Split words, phrases and idioms.
+-- Stemming - Maps to the valid root word. useful in finding synonymns and search engines.
+-- Semantic analytics - Compares words, phrases adn idioms in a set of documents to extract meaning
+-- Disambiguation - Determines meaninig and sense of words (context vs intent).
+-- Topic models - Discover topics in a collection of documents.
+-- Tf-idf - Represents term frequency and inverse document library.
+
+NLP Approaches:
+-- Basic text processing - Analyze text and extract keywords
+-- Categorize/Tag words - Finding lexical categories and automatically tagging
+each word with its word class. eg: chinese, spanish etc. Words can be tagges as 
+adjecties, verbs, nouns etc.
+-- Classify text - Identify particular features of language and use it to 
+classify it. eg: sports, technology, policitcs etc.
+-- Extract Info - Identifying the entities and relationship in a text to extract
+in a structured way. eg: date, time, money, direction.
+-- Analyze sentence structure - Capture formal grammer to describe the structure
+of a set of sentences. eg: find well formed sentrnce structure.
+-- Build feature based structure - We get an insight into grammatical categories
+of the text doc. eg: features of texts based of speech tag or grammer rules.
+--Analyza the meaning - Perform quantitative analysis of given set of data to
+extarct the info. eg: find entities in text adn trying to establish relationship 
+between them.
+
+NLP Environment setup (windows):
+- Install python latest version from this url - https://www.python.org/
+- Install below modules in command prompt.
+  > pip install nltk
+  > pip install scikit-learn
+
+- NLTK modules has contain collections, corpus and models.
+
+## Sentence analysis.
+> import string
+> from nltk.corpus import stopwords
+
+# List top 10 stopwords in english.
+> stopwords.words('english')[0:10]
+
+# Create test string 
+> test_sent = 'This is my first string. Woow! we are doing just fine'
+
+# Eliminate the punctuation in form of characters and print them.
+> no_punctuation = [char for char in text_sent if char not in string.punctuation]
+
+# Print test string wihtout punctuations.
+> no_punctuation = ''.join(no_punctuation)
+
+# Split each words presesnt in new sentence.
+> no_punctuation.split()
+
+# Now eliminate stopwords from test string.
+> clean_sent = [word for word in no_punctuation.split() if word.lower() not in stopwords.words('english')]
+
+
+- NLP libaries:
+-- NLTK - python based library for NLP, build program to work with different human languages.
+-- scikit-learn - python module has various algorithms and designed for operating with other
+python libraries such as numpy nd scipy.
+-- TextBlob - Processing text data.
+-- SpaCy - Provides useful views of textual meaning and linguistic structure.
+
+Scikit-learn Approach:
+- Library woth set of modules to process and anlyze natural language data
+data such as texts, images adn extract info using machine learning algoriths,
+- Fetaures:
+-- Built in modules - Contains buiilt in modules to load the datasets
+content and categories.
+-- Feature extraction - Way to extract info from data which can be text or images.
+-- Model Training - Analyze the content based on particular categories and
+then train them according to a specific model
+-- Pipelining building mechanism
+-- Performance optimimzation
+-- Grid search for finding good parameters.
+
+Scikit-learn dataset structure
+- Container folder
+--- Category1
+----- Data load object (eg: txt files)
+--- Category2
+----- Data load object
+
+# method to load datasets.
+> load_data = sklearn.datasets.load_files()
+
+# Build feature extraction transformer.
+from sklearn.feature_extraction.text import <appropriate transformer>
+
+-- Attributes of 
+
+# Import the dataset
+> from sklearn.datasets import load_digits
+
+# Load dataset 'load_digit'
+> digit_dataset = load_digits()
+
+# Describe the dataset
+> digit_dataset
+
+# View type of dataset
+> type(digit_dataset)
+
+# View data
+> digit_dataset.data
+
+# View target
+> digit_dataset.target
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

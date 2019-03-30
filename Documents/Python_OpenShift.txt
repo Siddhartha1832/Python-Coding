@@ -1,0 +1,69 @@
+﻿
+### Openshift ###
+
+- Platform as a service (PaaS) that allows you to build and run applications on containers.
+- It enables them to build their own provate cloud on the data center.
+
+## How OpenShift works?
+- Built on top of core technologies - Docker based containers and kubernetes system for orchestration.
+- Docker is a llighweight portable format that provides imiages of an app to run on diffrerent environments. 
+  It includes all dependienes needed for the app and underlying systems to get deployed and run as needed.
+- Need multiple containers to ebable a production ready environment - complication like for load balancer, 
+  storage mounting etc on infrastructure.
+- Kubernetes is open source project created by google manages containerized apps across set of containers
+  or hosts and provide mechanisms for deployment, maintenance adn app scaling while docker packages 
+  instantiaites and runs containerized apps.
+- Openshift is a layes on top of docker and kubernetes that makes it accessible and easy for the developer 
+  to create app and platform of deployment for containers to both development and Production workloads.
+- Openshift provides a web based console that makes it easy to perform needed activities like
+  managing deployments, pods, creating services etc.
+- It has command line tool called OC which is command line executable available for windows, apple and linux. 
+  you can perform all the operations on openshift.
+- Kubernetes groups resource in namespaces - user with access to namespace will always access to all 
+  the resources within the namespace.
+- Kubernetes provides mechanism to run containers adn scale them for production.
+- Openshift heart - Pods - runs on single node adn can run one or more containers.
+- The containers within a pod will share the same IP address of this pod.
+- Containier define a virtual boundary of compute and memory resources and assigns them to platform
+  like tomcat or mysql.
+- Container spinup from an image. Openshift used docker images to spinup containers.
+- Containers will communicate with the same pod via localhost.
+- An app can get scaled up adn multiple pods we spinup to serve the same app.
+- Each pod have its own IP address, a service is created to provide single interface for the app and
+  provides the standalone IP address of its own for the app to the access.
+- Routes act as load balancer across pods and DNS that provides an addressable name for app to be accessed.
+- pods are deployed on nodes and share the node resources like persistent storage volumes.
+- Pods are made available via services. Services are set of pods. it available to external world
+  outside the cluster using route.
+- the management of pods is maintaned by replication controller which ensure that specified number of
+  replicas of pod are running at all times.
+- Build configuration - how to builf a new image to be deployed. Image can be created from 1 or 2 resources.
+  It can be created from users code and base image from source to image. S2i provides builder images for
+  common languagegs like PHP, ruby, Python, java. the image can be docker base build from a docker file. 
+- Build config is also ted to the base images or source code via web hooks and will be updates
+  automatically if change to source code or base image happens.
+- enables developer to update the source code and push it to source code repositort and the webhook will
+  automatically trigger the build config to get updates.
+- Integrated Docker registry (IDR) used for app deployment or nodes. Openshift tracks images throught 
+  image stream component.
+- the deployment config defines their template for the pod and manages the deployment of new images or 
+  config changes. DC as single micor service that replication controller will then manage the pod and
+  keep them running.
+
+
+- Open source container application platform by Red Hat based on top of Docker containers 
+  and the Kubernetes container cluster manager.
+- Openshift lets you easily and quickly build, develop, and deploy in nearly any infrastructure, 
+  public or private. Whether it’s on-premise, in a public cloud, or hosted, you have an 
+  award-winning platform to get your next big idea to market ahead of your competition.
+
+- Openshift Login URL - https://manage.openshift.com/
+
+- Login using Google account.
+
+- Sample Flask App using Python:
+  https://github.com/OpenShiftDemos/os-sample-python
+
+- Deployed Python Flask App in OpenShift using Python:
+  http://sample-python-app-sample-python-app.193b.starter-ca-central-1.openshiftapps.com/
+
