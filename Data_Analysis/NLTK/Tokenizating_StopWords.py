@@ -1,5 +1,10 @@
-#pip install nltk - install nltk module in command prompt.
-#nltk.download() - use after install nlk modul in python shell.
+'''
+Install below pytohn module before you run this code
+>>> pip install ltk --upgrade
+> import nltk
+> nltk.download() # use after install nlk module in python shell.
+'''
+
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.corpus import stopwords
 

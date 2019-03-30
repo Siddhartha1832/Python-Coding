@@ -1,3 +1,8 @@
+'''
+Install below pytohn module before you run this code
+>>> pip install ltk --upgrade
+'''
+
 from nltk.stem import PorterStemmer
 from nltk.tokenize import sent_tokenize, word_tokenize
 
