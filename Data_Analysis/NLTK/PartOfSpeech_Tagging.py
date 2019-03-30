@@ -1,6 +1,6 @@
 '''
 Install below pytohn module before you run this code
->>> pip install ltk --upgrade
+>>> pip install nltk --upgrade
 '''
 
 import nltk
